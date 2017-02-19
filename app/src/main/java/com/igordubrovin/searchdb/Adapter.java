@@ -40,8 +40,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolderRv>{
 
     @Override
     public int getItemCount() {
-        if (cursor != null)
-        return cursor.getCount();
+
+        if (cursor != null) {
+            int i = cursor.getCount();
+            return cursor.getCount();
+        }
         else return 0;
     }
 

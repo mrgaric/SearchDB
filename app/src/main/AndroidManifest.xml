@@ -15,6 +15,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Main2Activity" />
+        <provider
+            android:authorities="com.igordubrovin.searchdb"
+            android:name=".MyContentProvider"/>
     </application>
 
 </manifest>
