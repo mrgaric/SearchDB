@@ -1,16 +1,8 @@
 package com.igordubrovin.searchdb;
 
-import android.content.CursorLoader;
-import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -19,10 +11,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-
-import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -41,11 +30,11 @@ public class MainActivity extends AppCompatActivity{
 
 //        DbOfStationsSearch db = new DbOfStationsSearch(this);
 //        cursor = db.getEmployees();
-
+        fragment1 = new Fragment1();
         fragment2 = new Fragment2();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.fragmentCont, fragment2);
+        transaction.add(R.id.fragmentCont, fragment1, "fragment1");
         transaction.commit();
 
         etSearch = (MyEditText) findViewById(R.id.etSearch);
@@ -79,9 +68,23 @@ public class MainActivity extends AppCompatActivity{
         btnTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Main2Activity.class);
+                /*Intent intent = new Intent(getApplicationContext(), Main2Activity.class);
                 startActivity(intent);
-                overridePendingTransition(R.anim.activity_down_up_enter, R.anim.activity_down_up_close_exit);
+                overridePendingTransition(R.anim.activity_down_up_enter, R.anim.activity_down_up_close_exit);*/
+                android.support.v4.app.Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragmentCont);
+                if (fragment.getTag().equals("fragment1")){
+                    getSupportFragmentManager().beginTransaction()
+                            .setCustomAnimations(R.anim.activity_down_up_enter, R.anim.activity_down_up_close_exit, R.anim.activity_down_up_exit, R.anim.activity_down_up_close_enter)
+                            .replace(R.id.fragmentCont, fragment2, "fragment2")
+                            .addToBackStack(null)
+                            .commit();
+                }
+                else {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragmentCont, fragment1, "fragment1")
+                            .commit();
+                }
+
             }
         });
 
